@@ -1,0 +1,63 @@
+$sm: 576px;
+$md: 768px;
+$ld: 992px;
+$lg: 1200px;
+
+/**
+** Remove the unit of a length
+** @param {Number} $number - Number to remove unit from
+** @return {Number} - Unitless number
+** @source https://css-tricks.com/snippets/sass/strip-unit-function/
+**/
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+      @return $number / ($number * 0 + 1);
+    }
+    @return $number;
+  }
+
+@mixin media-breakpoint-up($size) {
+    @media (min-width: $size) {
+      @content;
+    }
+}
+  
+@mixin media-breakpoint-down($size) {
+    @media (max-width: $size-1) {
+        @content;
+    }
+}
+
+@mixin media-breakpoint-between($small, $large) {
+    @media (min-width: $small) and (max-width: $large) {
+        @content;
+    }
+}
+  
+@mixin media-breakpoint-only($size) {
+    $intSize: strip-unit($size);
+  
+    @if ($intSize >= strip-unit($sm) and $intSize < strip-unit($md)) {
+        @include media-breakpoint-between("576px", "767px");
+    }
+  
+    @else if ($intSize >= strip-unit($md) and $intSize < strip-unit($ld)) {
+        @include media-breakpoint-between("768px", "991px");
+    }
+    
+    @else if ($intSize >= strip-unit($ld) and $intSize < strip-unit($lg)) {
+        @include media-breakpoint-between("992px", "1199px");
+    }
+
+    @else if($intSize >= strip-unit($lg)) {
+      @media (min-width: $size) {
+        @content;
+      }
+    }
+
+    @else {
+      @media (max-width: $size) {
+        @content;
+      }
+    }
+}
