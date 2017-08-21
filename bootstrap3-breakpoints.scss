@@ -1,8 +1,3 @@
-$sm: 576px;
-$md: 768px;
-$ld: 992px;
-$lg: 1200px;
-
 /**
 ** Remove the unit of a length
 ** @param {Number} $number - Number to remove unit from
@@ -37,19 +32,19 @@ $lg: 1200px;
 @mixin media-breakpoint-only($size) {
     $intSize: strip-unit($size);
   
-    @if ($intSize >= strip-unit($sm) and $intSize < strip-unit($md)) {
-        @include media-breakpoint-between("576px", "767px");
+    @if ($intSize >= strip-unit($screen-xs-min) and $intSize < strip-unit($screen-sm-min)) {
+        @include media-breakpoint-between($screen-xs-min, $screen-xs-max);
     }
   
-    @else if ($intSize >= strip-unit($md) and $intSize < strip-unit($ld)) {
-        @include media-breakpoint-between("768px", "991px");
+    @else if ($intSize >= strip-unit($screen-sm-min) and $intSize < strip-unit($screen-md-min)) {
+        @include media-breakpoint-between($screen-sm-min, $screen-sm-max);
     }
     
-    @else if ($intSize >= strip-unit($ld) and $intSize < strip-unit($lg)) {
-        @include media-breakpoint-between("992px", "1199px");
+    @else if ($intSize >= strip-unit($screen-md-min) and $intSize < strip-unit($screen-lg-min)) {
+        @include media-breakpoint-between($screen-md-min, $screen-md-max);
     }
 
-    @else if($intSize >= strip-unit($lg)) {
+    @else if($intSize >= strip-unit($screen-lg-min)) {
       @media (min-width: $size) {
         @content;
       }
